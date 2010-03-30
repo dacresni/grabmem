@@ -61,7 +61,7 @@ int main(int argc, char** argv){
     int max , timeout=0;
     randomGen = open("/dev/urandom",O_RDONLY); //a file discriptor
     //trashcan= open("/dev/null",O_WRONLY);
-    if (argc >=4 ) max=(size_t) atoi(argv[3]);
+    if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
     if (argc ==5 ) timeout= atoi(argv[4]);    
     
     int interval = atoi(argv[1]);
@@ -73,11 +73,11 @@ int main(int argc, char** argv){
         sleep(interval);
         time+=interval;
         if ((max>0)&&( memsize >= max)) {
-            printf("reached maximum memory in %i of MY seconds",time);
+            printf("reached maximum memory in %i of MY seconds\n",time);
             exit(0);
         }
         if ((timeout>0)&& (time >= timeout)){
-            printf("reached timeout period with %i memory grabbed",(int)memsize);
+            printf("reached timeout period with %i memory grabbed\n",(int)memsize);
             exit(0);
         }
     }
