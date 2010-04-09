@@ -43,7 +43,7 @@ void usage(){
 
 void interruptHandler( int sig) {
     printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, time );  //we'll do the human readable later[TODO]
-    _exit(0); //diferent exit
+    _exit(0); //different exit
 }
 
 void grab( size_t size){
