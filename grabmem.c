@@ -93,7 +93,7 @@ int main(int argc, char** argv){
             exit(0);
         }
         if ((timeout>0)&& (time >= timeout)){
-            printf("reached timeout period with %i memory grabbed\n",(int)memsize);
+            printf("reached timeout period with %u memory grabbed\n",(unsigned)memsize);
             exit(0);
         }
     }
