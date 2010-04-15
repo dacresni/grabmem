@@ -1,6 +1,6 @@
 /* this is a program to grab a bunch of memory over time to test the memory management of SGE */
 #include <stdio.h>
-//#include <time.h>
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
@@ -15,8 +15,13 @@
 void* myMemory = NULL; //can I do void pointers?
 int time=0;
 size_t memsize=0;
-
+timeb *now;
+timeb *then;
 int randomGen ,trashcan;
+
+int timePast(){ 
+    
+}
 
 void usage(){
     printf("this program allocates memory in INTERVAL second intervals, increasing by SIZE megabytes of memory,\n");
@@ -62,8 +67,10 @@ int main(int argc, char** argv){
     randomGen = open("/dev/urandom",O_RDONLY); //a file discriptor
     //trashcan= open("/dev/null",O_WRONLY);
     if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
-    if (argc ==5 ) timeout= atoi(argv[4]);    
-    
+    if (argc ==5 ) { 
+        timeout= atoi(argv[4]);    
+        ftime(now);
+    }
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
     
