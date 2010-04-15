@@ -19,8 +19,9 @@ timeb *now;
 timeb *then;
 int randomGen ,trashcan;
 
-int timePast(){ 
-    
+int timePast(){
+    ftime(now);
+    return (then.time - now.time);  
 }
 
 void usage(){
@@ -69,7 +70,7 @@ int main(int argc, char** argv){
     if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
     if (argc ==5 ) { 
         timeout= atoi(argv[4]);    
-        ftime(now);
+        ftime(then);
     }
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
@@ -78,9 +79,9 @@ int main(int argc, char** argv){
         memsize+=step;
         grab(memsize);
         sleep(interval);
-        time+=interval;
+        time =timePast()
         if ((max>0)&&( memsize >= max)) {
-            printf("reached maximum memory in %i of MY seconds\n",time);
+            printf("reached maximum memory in %i seconds\n",time);
             exit(0);
         }
         if ((timeout>0)&& (time >= timeout)){
