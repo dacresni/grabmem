@@ -13,15 +13,15 @@
 
 //[TODO] we must find the where the breake is later
 void* myMemory = NULL; //can I do void pointers?
-int time=0;
+int Time=0;
 size_t memsize=0;
-timeb *now;
-timeb *then;
+time_t now ,then;
 int randomGen ,trashcan;
 
-int timePast(){
-    ftime(now);
-    return (then.time - now.time);  
+int timePast(void){
+    time(&now);
+    //return (then.time - now.time);  
+    return ((int)then-(int)now);
 }
 
 void usage(){
@@ -32,7 +32,7 @@ void usage(){
 // we will intercept SIGINT to catch ctrl-d
 
 void interruptHandler( int sig) {
-    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, time );  //we'll do the human readable later[TODO]
+    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
     _exit(0); //diferent exit
 }
 
@@ -70,7 +70,7 @@ int main(int argc, char** argv){
     if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
     if (argc ==5 ) { 
         timeout= atoi(argv[4]);    
-        ftime(then);
+        time(&then);
     }
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
@@ -79,12 +79,12 @@ int main(int argc, char** argv){
         memsize+=step;
         grab(memsize);
         sleep(interval);
-        time =timePast()
+        Time =timePast();
         if ((max>0)&&( memsize >= max)) {
-            printf("reached maximum memory in %i seconds\n",time);
+            printf("reached maximum memory in %i seconds\n",Time);
             exit(0);
         }
-        if ((timeout>0)&& (time >= timeout)){
+        if ((timeout>0)&& (Time >= timeout)){
             printf("reached timeout period with %i memory grabbed\n",(int)memsize);
             exit(0);
         }
