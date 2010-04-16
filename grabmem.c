@@ -37,7 +37,7 @@ int randomGen ,trashcan;
 int timePast(void){
     time(&now);
     //return (then.time - now.time);  
-    return ((int)then-(int)now);
+    return ((int)now -(int)then);
 }
 
 void usage(){
