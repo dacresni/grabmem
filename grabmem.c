@@ -16,7 +16,7 @@
 
 
 #include <stdio.h>
-//#include <time.h>
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
@@ -29,10 +29,16 @@
 
 //[TODO] we must find the where the breake is later
 void* myMemory = NULL; //can I do void pointers?
-int time=0;
+int Time=0;
 size_t memsize=0;
-
+time_t now ,then;
 int randomGen ,trashcan;
+
+int timePast(void){
+    time(&now);
+    //return (then.time - now.time);  
+    return ((int)now -(int)then);
+}
 
 void usage(){
     printf("this program allocates memory in INTERVAL second intervals, increasing by SIZE megabytes of memory,\n");
@@ -42,7 +48,7 @@ void usage(){
 // we will intercept SIGINT to catch ctrl-d
 
 void interruptHandler( int sig) {
-    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, time );  //we'll do the human readable later[TODO]
+    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
     _exit(0); //diferent exit
 }
 
@@ -78,8 +84,10 @@ int main(int argc, char** argv){
     randomGen = open("/dev/urandom",O_RDONLY); //a file discriptor
     //trashcan= open("/dev/null",O_WRONLY);
     if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
-    if (argc ==5 ) timeout= atoi(argv[4]);    
-    
+    if (argc ==5 ) { 
+        timeout= atoi(argv[4]);    
+        time(&then);
+    }
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
     
@@ -87,13 +95,13 @@ int main(int argc, char** argv){
         memsize+=step;
         grab(memsize);
         sleep(interval);
-        time+=interval;
+        Time =timePast();
         if ((max>0)&&( memsize >= max)) {
-            printf("reached maximum memory in %i of MY seconds\n",time);
+            printf("reached maximum memory in %i seconds\n",Time);
             exit(0);
         }
-        if ((timeout>0)&& (time >= timeout)){
-            printf("reached timeout period with %u memory grabbed\n",(unsigned)memsize);
+        if ((timeout>0)&& (Time >= timeout)){
+            printf("reached timeout period with %i memory grabbed\n",(int)memsize);
             exit(0);
         }
     }
