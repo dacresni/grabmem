@@ -42,7 +42,7 @@ int timePast(void){
 
 void usage(){
     printf("this program allocates memory in INTERVAL second intervals, increasing by SIZE megabytes of memory,\n");
-    printf("until the machine runs out or you quit it with ctrl-d.\n");
+    printf("until the machine runs out or you quit it with ctrl-c.\n");
     exit(0);
 }
 // we will intercept SIGINT to catch ctrl-d
