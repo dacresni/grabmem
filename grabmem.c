@@ -45,13 +45,18 @@ void usage(){
     printf("until the machine runs out or you quit it with ctrl-c.\n");
     exit(0);
 }
-// we will intercept SIGINT to catch ctrl-d
+// we will intercept SIGINT to catch ctrl-c
 
 void interruptHandler( int sig) {
     printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
     _exit(0); //diferent exit
 }
-
+void eofHandeler(){ 
+    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
+    printf("caught eof\n");
+    exit(0);
+    
+}
 void grab( size_t size){
     /*if (myMemory != NULL)
         free(myMemory);
@@ -78,7 +83,7 @@ int main(int argc, char** argv){
         printf("%s interval step [max] [timeout] \n" , argv[0]);
         usage();
     }
-    (void)signal (SIGINT ,interruptHandler); //catch C-c
+    //(void)signal (SIGINT ,interruptHandler); //catch C-c
     //register signals
     int max , timeout=0;
     randomGen = open("/dev/urandom",O_RDONLY); //a file discriptor
@@ -91,7 +96,10 @@ int main(int argc, char** argv){
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
     
+    int c;
     while(1) {
+    //while ((c = getchar()) != EOF) { 
+        if ((c = getchar()) == EOF){eofHandeler(); }
         memsize+=step;
         grab(memsize);
         sleep(interval);
@@ -105,7 +113,9 @@ int main(int argc, char** argv){
             exit(0);
         }
     }
-    
+    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
+    printf("caught eof\n");
+   
     printf("we got all the way here? \n");
     return 0;
 }
