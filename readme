@@ -1,1 +1,3 @@
 this is a program to suck up memory. Originally ment for testing the qouta ability of SGE. 
+usage: grabmem interval step [max] [timeout] 
+This program allocate 
