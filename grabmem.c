@@ -32,7 +32,7 @@ void* myMemory = NULL; //can I do void pointers?
 int Time=0;
 size_t memsize=0;
 time_t now ,then;
-int randomGen ,trashcan;
+int randomGen;
 
 int timePast(void){
     time(&now);
@@ -49,6 +49,7 @@ void usage(){
 
 void interruptHandler( int sig) {
     printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
+    close(randomGen);
     _exit(0); //diferent exit
 }
 
@@ -98,10 +99,12 @@ int main(int argc, char** argv){
         Time =timePast();
         if ((max>0)&&( memsize >= max)) {
             printf("reached maximum memory in %i seconds\n",Time);
+            close(randomGen);
             exit(0);
         }
         if ((timeout>0)&& (Time >= timeout)){
             printf("reached timeout period with %i memory grabbed\n",(int)memsize);
+            close(randomGen);
             exit(0);
         }
     }
