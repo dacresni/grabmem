@@ -34,7 +34,7 @@ size_t memsize=0;
 time_t now ,then;
 int randomGen;
 
-int timePast(void){
+int timePast(){
     time(&now);
     //return (then.time - now.time);  
     return ((int)now -(int)then);
