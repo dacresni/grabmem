@@ -59,14 +59,15 @@ void grab( size_t size){
     myMemory = malloc(size);
     */ 
     myMemory = realloc(myMemory, size);
-    printf("grabbed %li  memory\n",(long)memsize);
     //bzero(myMemory,memsize); 
     //memset (myMemory,1,memsize); 
     if (errno == ENOMEM ) {
       free(myMemory); //if we do this, we free a null pointer right?
+      close(randomGen);
       perror("out of memory , exiting");
       exit(errno);
     }
+    printf("grabbed %li  memory\n",(long)memsize);
     /*lets read from urandom */
     //read memsize bytes into myMemory from randomGen
     read (randomGen,myMemory,memsize);
