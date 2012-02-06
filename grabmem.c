@@ -48,7 +48,7 @@ void usage(){
 // we will intercept SIGINT to catch ctrl-d
 
 void interruptHandler( int sig) {
-    printf("%li memory allocated,\n ran for %i seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
+    printf("%li memory allocated,\n ran for %d seconds,\n",(long)memsize, Time );  //we'll do the human readable later[TODO]
     close(randomGen);
     _exit(0); //diferent exit
 }
@@ -88,10 +88,10 @@ int main(int argc, char** argv){
     if (argc >=4 ) max=(size_t) atoi(argv[3]) *1000000;
     if (argc ==5 ) { 
         timeout= atoi(argv[4]);    
-        time(&then);
     }
     int interval = atoi(argv[1]);
     size_t step =(size_t) atoi(argv[2]) * 1000000 ; //times a megabyte
+    time(&then);
     
     while(1) {
         memsize+=step;
@@ -99,12 +99,12 @@ int main(int argc, char** argv){
         sleep(interval);
         Time =timePast();
         if ((max>0)&&( memsize >= max)) {
-            printf("reached maximum memory in %i seconds\n",Time);
+            printf("reached maximum memory in %d seconds\n",Time);
             close(randomGen);
             exit(0);
         }
         if ((timeout>0)&& (Time >= timeout)){
-            printf("reached timeout period with %i memory grabbed\n",(int)memsize);
+            printf("reached timeout period with %d memory grabbed\n",(int)memsize);
             close(randomGen);
             exit(0);
         }
