@@ -54,6 +54,20 @@
 
     <h2>Install</h2>
 <p>make grabmem</p>
+
+<h2>Usage</h2> 
+
+<pre>
+if (argc < 2 ){ 
+        printf("%s interval step [max] [timeout] \n" , argv[0]);
+        usage();
+    }
+void usage(){
+    printf("this program allocates memory in INTERVAL second intervals, increasing by SIZE megabytes of memory,\n");
+    printf("until the machine runs out or you quit it with ctrl-c.\n");
+    exit(0);
+}
+</pre>
 <h2>License</h2>
 <p>GPL v3</p>
 <h2>Authors</h2>
