@@ -1,0 +1,1 @@
+{"note":"Don't delete this file! It's used internally to help with page regeneration.","name":"Grabmem","tagline":"A memory bound load simulator: (a program to suck up memory) ","body":"## build:\r\n make grabmem\r\n\r\n## License:\r\n GPL v3\r\n\r\n## Authors:\r\n Nehemiah I Dacres  \r\n\r\n## Contact: \r\nvivacarlie@gmail.com","google":""}
