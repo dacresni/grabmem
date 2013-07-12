@@ -80,7 +80,15 @@ int main(int argc, char** argv){
         printf("%s interval step [max] [timeout] \n" , argv[0]);
         usage();
     }
-    (void)signal (SIGINT ,interruptHandler); //catch C-c
+
+    //(void)signal (SIGINT ,interruptHandler); //catch C-c
+    //use sigaction instead of signal
+    struct sigaction act, oact;
+    act.sa_handler = interruptHandler;
+    sigemptyset(&act.sa_mask);
+    act.sa_flags = 0;
+    sigaction(SIGINT, &act, &oact);
+
     //register signals
     int max , timeout=0;
     randomGen = open("/dev/urandom",O_RDONLY); //a file discriptor
