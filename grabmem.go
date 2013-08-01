@@ -17,12 +17,14 @@ var myMemory = make([]byte, step)
 func usage() {
     fmt.Println("a program to suck up memory")
 }
+
 func init() {
-    flag.IntVar(&memsize, "step",0, "step size for memory increases")
-    flag.IntVar(&max, "max",0, "maximum memory to allcate")
-    flag.DurationVar(&interval, "interval", 0, "time between memory steps")
+    flag.IntVar(&memsize, "step",1, "step size for memory increases")
+    flag.IntVar(&max, "max",5, "maximum memory to allcate")
+    flag.DurationVar(&interval, "interval", 1, "time between memory steps")
     flag.Parse()
 }
+
 func fill() {
     //myMemory.Grow(step)
     bytesWritten, err := io.ReadFull(rand.Reader, myMemory)
@@ -32,10 +34,11 @@ func fill() {
     }
     time.Sleep(interval)
 }
+
 func main () {
+    myMemory = make([]byte, step)
     for memsize <= max {
-      myMemory = make([]byte, memsize+step)
-      memsize+=step
+      myMemory = append(myMemory , [step]byte  )
       fill()
     }
     usage()
