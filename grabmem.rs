@@ -14,15 +14,15 @@ fn grab(size: i64) {
 
 
 fn main(){  
-    let args: Vec<String> = env::args().collect();
+    let arg: Vec<String> = env::args().collect();
 
     usage();
-    let max  = &arg[1]
-    let rate = &arg[2]
-    let step = &arg[3].parse::<i64>()
+    const max  = &arg[1];
+    const rate = &arg[2];
+    const step = &arg[3].parse::<i64>();
     let duration = time::Duration::from_secs(rate);
-    let mut memsize = 0i64
-    let mut myMemory = [i64;step]
+    let mut memsize = 0i64 ;
+    let mut myMemory = [i64;step] ;
 
     loop { 
         if memsize >= max {
